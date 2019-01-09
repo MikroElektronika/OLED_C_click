@@ -1,0 +1,146 @@
+{*
+Example for OLED_C Click
+
+    Date          : Jan 2018.
+    Author        : MikroE Team
+
+Test configuration PIC :
+    
+    MCU             : P18F87K22
+    Dev. Board      : EasyPIC PRO v7
+    PIC Compiler ver : v7.1.0.0
+
+---
+
+Description :
+
+The application is composed of three sections :
+
+- System Initialization - Initializes SPI module and AN pin, RST pin, CS pin, PWM pin and INT pin  as output
+- Application Initialization - Initializes driver init and OLED C init and sets full screen on white color with writting demo text.
+- Application Task - (code snippet) -
+      1. Display demo rectangle
+      2. Display demo line
+      3. Display demo Image
+
+
+*}
+program Click_OLED_C_PIC;
+
+uses Click_OLED_C_types, Click_OLED_C_config, fonts, pictures;
+
+var
+    new_contrast : uint8_t; 
+    text1 : array[7] of uint8_t; 
+    text2 : array[17] of uint8_t; 
+    text3 : array[17] of uint8_t; 
+    
+procedure systemInit(); 
+begin
+
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_INT_PIN, _GPIO_OUTPUT); 
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_RST_PIN, _GPIO_OUTPUT); 
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_AN_PIN, _GPIO_OUTPUT); 
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_CS_PIN, _GPIO_OUTPUT); 
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_PWM_PIN, _GPIO_OUTPUT); 
+    mikrobus_spiInit(_MIKROBUS1, @_OLEDC_SPI_CFG[0]); 
+    Delay_ms(100); 
+
+end;
+
+procedure applicationInit(); 
+begin
+
+    oledc_spiDriverInit(T_OLEDC_P(@_MIKROBUS1_GPIO), T_OLEDC_P(@_MIKROBUS1_SPI)); 
+    oledc_init(); 
+    oledc_fill_screen(0xFFFF); 
+    oledc_set_font(@guiFont_Tahoma_8_Regular[0], 0, _OLEDC_FO_HORIZONTAL); 
+    oledc_text(@text1[0], 15, 10); 
+    oledc_text(@text2[0], 5, 30); 
+    oledc_text(@text3[0], 5, 45); 
+    Delay_ms(1000); 
+
+end;
+
+procedure applicationTask(); 
+begin
+
+    oledc_fill_screen(0xFFFF); 
+    Delay_100ms(); 
+    oledc_rectangle(0, 0, 96, 96, 0xF000); 
+    Delay_ms(500); 
+    oledc_rectangle(5, 5, 91, 91, 0xFF00); 
+    Delay_ms(500); 
+    oledc_rectangle(10, 10, 86, 86, 0x00F0); 
+    Delay_ms(500); 
+    oledc_rectangle(15, 15, 81, 81, 0x0F0F); 
+    Delay_ms(500); 
+    oledc_rectangle(20, 20, 76, 76, 0xF000); 
+    Delay_ms(500); 
+    oledc_rectangle(25, 25, 71, 71, 0xFF00); 
+    Delay_100ms(); 
+    oledc_rectangle(25, 25, 71, 27, 0); 
+    Delay_100ms(); 
+    oledc_rectangle(25, 71, 71, 73, 0); 
+    Delay_100ms(); 
+    oledc_rectangle(25, 25, 27, 71, 0); 
+    Delay_100ms(); 
+    oledc_rectangle(68, 25, 71, 71, 0); 
+    Delay_ms(3000); 
+    oledc_image(@me_logo_bmp[0], 0, 0); 
+    Delay_ms(2000); 
+
+end;
+
+begin
+    new_contrast := 0;
+    text1[0] := 'H';
+    text1[1] := 'e';
+    text1[2] := 'l';
+    text1[3] := 'l';
+    text1[4] := 'o';
+    text1[5] := ',';
+    text1[6] := 0;
+    text2[0] := 't';
+    text2[1] := 'h';
+    text2[2] := 'i';
+    text2[3] := 's';
+    text2[4] := ' ';
+    text2[5] := 'i';
+    text2[6] := 's';
+    text2[7] := ' ';
+    text2[8] := 't';
+    text2[9] := 'h';
+    text2[10] := 'e';
+    text2[11] := ' ';
+    text2[12] := 'd';
+    text2[13] := 'e';
+    text2[14] := 'm';
+    text2[15] := 'o';
+    text2[16] := 0;
+    text3[0] := 'f';
+    text3[1] := 'o';
+    text3[2] := 'r';
+    text3[3] := ' ';
+    text3[4] := 'O';
+    text3[5] := 'L';
+    text3[6] := 'E';
+    text3[7] := 'D';
+    text3[8] := ' ';
+    text3[9] := 'C';
+    text3[10] := ' ';
+    text3[11] := 'c';
+    text3[12] := 'l';
+    text3[13] := 'i';
+    text3[14] := 'c';
+    text3[15] := 'k';
+    text3[16] := 0;
+
+    systemInit(); 
+    applicationInit(); 
+    while (1) do 
+    begin 
+        applicationTask(); 
+    end;
+
+end.

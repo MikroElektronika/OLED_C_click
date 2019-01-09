@@ -1,0 +1,8 @@
+unit Click_OLED_C_config;
+
+uses Click_OLED_C_types;
+
+const
+    _OLEDC_SPI_CFG : array[3] of uint32_t = (1000000, _SPI_MSB_FIRST, (_SPI_CLK_IDLE_LOW or _SPI_SAMPLE_DATA_RISING_EDGE)); 
+    
+end.

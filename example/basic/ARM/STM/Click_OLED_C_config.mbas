@@ -1,0 +1,8 @@
+module Click_OLED_C_config
+
+include Click_OLED_C_types
+
+const
+    _OLEDC_SPI_CFG as uint32_t[2] = (_SPI_FPCLK_DIV2, (((((((_SPI_SECOND_CLK_EDGE_TRANSITION or _SPI_CLK_IDLE_HIGH) or _SPI_MASTER) or _SPI_MSB_FIRST) or _SPI_8_BIT) or _SPI_SSM_ENABLE) or _SPI_SS_DISABLE) or _SPI_SSI_1))
+    
+end.

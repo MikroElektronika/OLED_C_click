@@ -1,0 +1,8 @@
+module Click_OLED_C_config
+
+include Click_OLED_C_types
+
+const
+    _OLEDC_SPI_CFG as uint32_t[4] = (_SPI_MASTER_OSC_DIV4, _SPI_DATA_SAMPLE_MIDDLE, _SPI_CLK_IDLE_LOW, _SPI_LOW_2_HIGH)
+    
+end.

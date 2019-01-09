@@ -1,0 +1,8 @@
+unit Click_OLED_C_config;
+
+uses Click_OLED_C_types;
+
+const
+    _OLEDC_SPI_CFG : array[2] of uint32_t = (1000000, (((((_SPI_CFG_CLK_PHASE_CAPT_LEADING or _SPI_CFG_CLK_IDLE_LOW) or _SPI_CFG_MASTER) or _SPI_CFG_MSB_FIRST) or _SPI_CFG_FRAME_SIZE_8BITS) or _SPI_CFG_SELECT_CTAR0)); 
+    
+end.
